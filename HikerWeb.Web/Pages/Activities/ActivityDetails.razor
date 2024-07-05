@@ -1,0 +1,82 @@
+﻿@page "/Activity/{Id:int}"
+@inherits ActivityDetailsBase
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="@Activity.ImageLink" class="img-fluid" style="max-width: 100%; height: auto;" alt="Activity Picture" />
+                <h2>@Activity.Title</h2>
+                <p>@Activity.Description</p>
+                <h4>Conditions</h4>
+                <p>@Activity.Conditions</p>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Elevation Gain:</strong> @Activity.Elevation meters</li>
+                    <li class="list-group-item"><strong>Difficulty:</strong> @Activity.Dificulty/5</li>
+                    <li class="list-group-item"><strong>Distance:</strong> @Activity.Distance km</li>
+                    <li class="list-group-item"><strong>Date:</strong> @Activity.Date</li>
+                    <li class="list-group-item"><strong>Place:</strong> @Activity.Place</li>
+                    <li class="list-group-item"><strong>Start Point:</strong> @Activity.StartPoint</li>
+                    <li class="list-group-item"><strong>End Point:</strong> @Activity.EndPoint</li>
+                    <li class="list-group-item"><strong>Club Name:</strong> <a href="/ClubDetails/@Activity.ClubDto.Id">@Activity.ClubDto.Name</a></li>
+                    <li class="list-group-item"><strong>Activity Type:</strong> @Activity.Type.Type</li>
+                </ul>
+                <br/>
+                </div>
+
+                <div class="row">
+                    <br />
+                   <div style="height:100%; width:100%; overflow:hidden; margin-top:20px" class="img-fluid">
+                        <img src="/Images/Untitled.png">
+                   </div>
+ 
+                </div>
+                
+            </div>
+        </div>
+        <div class="row">
+            @if(Activity.ClubDto.Id == LoggedIn.ClubId)
+            {
+                <div class="text-center mt-4">
+                    <a href="/Activity/Update/@Activity.Id" class="btn btn-primary">Edit Activity</a>
+                </div>
+            }
+        </div>
+        <br/>
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h4>Participants</h4>
+                @if(Users.Count() > 0)
+                {
+                    <ul class="list-group">
+                        @foreach (var participant in Users)
+                        {
+                            <li class="list-group-item">
+                                <a href="/User/@participant.Id">
+                                    @participant.FName @participant.LName
+                                </a>
+                                @if (participant.Id == LoggedIn.UserId)
+                                {
+                                    <button style="border:none; margin-left:5px;" @onclick="@RemoveUser">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-x-fill" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708" />
+                                        </svg>
+                                    </button>
+
+                                }
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p>There are no participants yet.. be the first one to <span><a style="color:cornflowerblue" @onclick="AddUser">join</a></span></p>
+                }
+            </div>
+
+            </div>
+        <br/>
+        <br/>
+    </div>

@@ -1,0 +1,80 @@
+﻿@page "/User/Update/{id:int}"
+@inherits UpdateUserBase
+
+@if(ErrorMessage != null)
+{
+    <DisplayError ErrorMessage="@ErrorMessage"></DisplayError>
+}
+else
+{
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">Update user</h3>
+            </div>
+            <div class="card-body">
+                <EditForm Model="@User" OnValidSubmit="HandleValidSubmit">
+                    <DataAnnotationsValidator />
+                    <div class="row">
+               
+                        <div class="col-md-4">
+                            <div class="form-group text-center">
+                                <br />
+                                @if (User.ProfilePicture != null)
+                                {
+                                    <img src="@User.ProfilePicture" style="max-width: 200px; max-height: 200px;" />
+
+                                    
+                                }
+                                <br />
+                                <InputFile OnChange="@OnInputFileChanged"></InputFile>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="Name">First name</label>
+                                <input type="text" class="form-control" id="clubName" @bind="@User.Fname">
+                                <ValidationMessage For="@(() => User.Fname)" />
+                            </div>
+                            <div class="form-group">
+                                <label for="Last Name">Last name</label>
+                                <input type="text" class="form-control" id="LName" @bind="@User.Lname">
+                                <ValidationMessage For="@(() => User.Lname)" />
+                            </div>
+                           <div class="form-group">
+                                <label for="DOB">DOB</label>
+                                <input type="text" class="form-control" id="dob" @bind="@User.DOB">
+                                <ValidationMessage For="@(() => User.Password)" />
+                            </div>
+                            <!-- Phone -->
+                            <div class="form-group">
+                                <label for="phone">Phone number</label>
+                                <input type="tel" class="form-control" id="phone" @bind="@User.PhoneNumber">
+                                <ValidationMessage For="@(() => User.PhoneNumber)" />
+                            </div>
+                            <!-- Email -->
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" @bind="@User.Email">
+                                <ValidationMessage For="@(() => User.Email)" />
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" @bind="@User.Password">
+                                <ValidationMessage For="@(() => User.Password)" />
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <br />
+                    <!-- Submit Button -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+}

@@ -1,0 +1,29 @@
+﻿@page "/Activities"
+@inherits ActivitiesBase
+
+@if(Activities == null){
+
+    <h3>Loading activities...</h3>
+}
+else{
+    <h3 class="mb-5">Activities</h3>
+    <SearchBox Items="Activities" OnSearch="UpdateFilteredActivities"> </SearchBox>
+    var activityCount = Activities.Count();
+
+    @if(activityCount > 0)
+    {
+
+        @foreach (var activityGroup in GetGroupedActivities())
+        {
+            <h4>@GetActivityType(activityGroup)</h4>
+
+            <div class = "row mt-3">
+                <DisplayActivities Activities="@activityGroup.Take(4)"></DisplayActivities>
+            </div>
+
+            <hr class="mb-3"/>
+        }
+         
+        }
+    }
+    

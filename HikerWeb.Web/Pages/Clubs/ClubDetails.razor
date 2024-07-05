@@ -1,0 +1,129 @@
+﻿@page "/Club/{Id:int}"
+@inherits ClubDetailsBase
+@if (Club == null && ErrorMessage == null)
+{
+    <h3>Loading club...</h3>
+}
+else if (ErrorMessage != null)
+{
+    <DisplayError ErrorMessage="@ErrorMessage"></DisplayError>
+}
+else
+{
+
+    <div class="container-fluid mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">Club Information</h3>
+                    </div>
+                    <div class="card-body">
+                        <!-- First Row for Club Information -->
+                        <div class="row">
+                            <!-- Club Logo -->
+                        
+                            <div class="col-md-4 text-center">
+                                <br />
+                                <img src="@Club.LogoUrl" alt="Club Logo" class="img-fluid mb-3" style="max-width: 200px;">
+                            </div>
+                            <!-- Club Details -->
+                            <div class="col-md-8">
+                                <h4>@Club.ClubName</h4>
+                                <ul class="list-group">
+                                    <li class="list-group-item"><i class="fas fa-envelope mr-2"></i>Email: <span class="font-weight-bold">@Club.Email</span></li>
+                                    <li class="list-group-item"><i class="fas fa-phone mr-2"></i>Phone: <span class="font-weight-bold">@Club.Phone</span></li>
+                                    <li class="list-group-item"><i class="fas fa-calendar-alt mr-2"></i>Date Formed: <span class="font-weight-bold">@Club.DateFormed</span></li>
+                                    <li class="list-group-item"><i class="fas fa-map-marker-alt mr-2"></i>Place: <span class="font-weight-bold">@Club.Place</span></li>
+                                    <li class="list-group-item"><i class="fas fa-users mr-2"></i>Number of Members: <span class="font-weight-bold">@Club.MembersCount</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <br />
+                        <!-- Second Row for Activities and Club Members -->
+                        <div class="row">
+                            <!-- Activities Column -->
+                            <div class="col-md-6 overflow-auto">
+                                <h4 class="d-flex justify-content-between">
+         
+                                    <span>Club Activities</span>
+                                    @if(LoggedIn.ClubId == Club.Id)
+                                    {
+                                        <a href="/Activity/Create" style="font-size: 24px;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5m6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5z" />
+                                            </svg>
+                                        </a>
+                                    }
+                                 </h4>
+                                @if (Activities.Count() > 0)
+                                {
+                                    <div class="list-group">
+                                        <!-- Activity Item Example -->
+                                        @foreach (var activity in Activities)
+                                        {
+                                            <a href="Activity/@activity.Id" class="list-group-item list-group-item-action">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h5 class="mb-1">@activity.Title</h5>
+                                                    <small>Date: @activity.Date</small>
+                                           
+                                                </div>
+                                            </a>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="d-flex w-100">
+                                        <h5 class="mb-1">There are no activities to show... </h5>
+                                    </div>
+                                }
+                            </div>
+                            <!-- Club Members Column -->
+                            <div class="col-md-6 overflow-auto">
+                                <h4>Club Members</h4>
+                                @if (Members.Count() > 0)
+                                {
+                                    <ul class="list-group">
+                                        @foreach (var member in Members)
+                                        {
+                                            <li class="list-group-item">
+                                                <a href="/User/@member.Id"> 
+                                                @member.FName @member.LName
+                                                </a>
+                                                </li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <div class="d-flex w-100">
+                                        <h5 class="mb-1">There are no members in the club... </h5>
+                                    </div>
+                                   
+                                }
+                            </div>
+                        </div>
+                        @if(User.ClubDto.Id != Club.Id)
+                        {
+     
+                            <div class="text-center mt-4">
+                                <button id="joinButton"class="btn btn-primary" @onclick="UpdateUserClub">Join Club</button>
+                            </div>
+                        }
+                        <!-- Edit Club Button -->
+                        @if(LoggedIn.ClubId == Club.Id)
+                        {
+                            <div class="text-center mt-4">
+                                <a href="/Club/Update/@Club.Id" class="btn btn-primary">Edit info</a>
+                            </div>
+                        }
+ 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}

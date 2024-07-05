@@ -1,0 +1,91 @@
+﻿@inherits ClubUpdateBase
+@page "/Club/Update/{Id:int}"
+
+@if (Club == null && ErrorMessage == null)
+{
+    <h3>Loading club...</h3>
+}
+else if (ErrorMessage != null)
+{
+    <DisplayError ErrorMessage="@ErrorMessage"></DisplayError>
+}
+else
+{
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">Update Club</h3>
+            </div>
+            <div class="card-body">
+                <!-- Club Details Form -->
+                <EditForm Model="@Club" OnValidSubmit="HandleValidSubmit">
+                    <DataAnnotationsValidator />
+                    <div class="row">
+                        <!-- Left Column for Image -->
+                        <div class="col-md-4">
+                            <div class="form-group text-center">
+                                @if (Club.LogoUrl != null)
+                                {
+                                    <img src="@Club.LogoUrl" style="max-width: 200px; max-height: 200px;" />
+
+                                    <br />
+                                }
+                                <InputFile OnChange="@OnInputFileChanged"></InputFile>
+                            </div>
+                        </div>
+                        <!-- Right Column for Information -->
+                        <div class="col-md-8">
+                            <!-- Club Name -->
+                            <div class="form-group">
+                                <label for="clubName">Club name</label>
+                                <input type="text" class="form-control" id="clubName" @bind="@Club.ClubName">
+                                <ValidationMessage For="@(() => Club.ClubName)" />
+                            </div>
+                            <!-- Email -->
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" @bind="@Club.Email">
+                                <ValidationMessage For="@(() => Club.Email)" />
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" @bind="@Club.Password">
+                                <ValidationMessage For="@(() => Club.Password)" />
+                            </div>
+                            <!-- Place -->
+                            <div class="form-group">
+                                <label for="place">Place</label>
+                                <input type="text" class="form-control" id="place" @bind="@Club.Place">
+                                <ValidationMessage For="@(() => Club.Place)" />
+                            </div>
+                            <!-- Phone -->
+                            <div class="form-group">
+                                <label for="phone">Phone number</label>
+                                <input type="tel" class="form-control" id="phone" @bind="@Club.Phone">
+                                <ValidationMessage For="@(() => Club.Phone)" />
+                            </div>
+                            <!-- Date Formed -->
+                            <div class="form-group">
+                                <label for="dateFormed">Date formed</label>
+                                <input type="text" class="form-control" id="dateFormed" @bind="@Club.DateFormed">
+                                <ValidationMessage For="@(() => Club.DateFormed)" />
+                            </div>
+                            <!-- Number of Members -->
+                            <div class="form-group">
+                                <label for="members">Number of members</label>
+                                <input type="number" class="form-control" id="members" @bind="@Club.MembersCount">
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <!-- Submit Button -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <br/>
+}

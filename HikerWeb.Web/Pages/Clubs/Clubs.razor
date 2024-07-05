@@ -1,0 +1,75 @@
+﻿@page "/Clubs"
+@inherits ClubsBase
+
+
+@if(Clubs == null)
+{
+    <h3>Loading clubs...</h3>
+}
+else
+{
+    <h3 class="mb-5">Clubs</h3>
+    <div class="w-100">
+
+        <SearchBox Items="Clubs" OnSearch="UpdateFilteredClubs"></SearchBox>
+    </div>
+    <br/>
+    var clubCount = Clubs.Count();
+
+@if (clubCount > 0)
+    {
+        const int itemsPerRow = 4;
+ 
+    @for (int i = 0; i < clubCount; i++)
+        {
+            var itemRowList = FilteredClubs.Skip(i * itemsPerRow).Take(itemsPerRow);
+            <div class="row mt-3">
+            @foreach (var item in itemRowList)
+            {
+                <div class="col-md-3 mb-2">
+
+                    <a href="/Club/@item.Id">
+                        <div class="card">
+                            <img class="img-thumbnail" src="@item.LogoUrl">
+                            <div class="card-body">
+                                <h5 class="card-title mb-3">
+                                    @item.Name
+                                </h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+            </div>
+        }
+    }
+}
+<div>
+    <p>&nbsp;</p>
+</div>
+
+<style>
+    a {
+        text-decoration: none;
+    }
+
+        a:hover .card {
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+    .card {
+        transition: box-shadow 0.3s ease-in-out;
+        overflow: hidden;
+    }
+
+    a:hover img {
+        transform: scale(1.07);
+        transition: 0.5s ease-in-out;
+    }
+
+    img {
+        transition: 0.5s ease-in-out;
+    }
+
+</style>

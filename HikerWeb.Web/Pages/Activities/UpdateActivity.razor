@@ -1,0 +1,103 @@
+﻿@inherits UpdateActivityBase
+@page "/Activity/Update/{Id:int}"
+
+<h3>UpdateActivity</h3>
+
+
+@page "/update-activity"
+@using Microsoft.AspNetCore.Components.Forms
+@using System.ComponentModel.DataAnnotations
+
+<div class="container mt-4">
+    <EditForm Model="Activity" OnInvalidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+
+        <div class="row mb-4 text-center">
+            <div class="col">
+                @if (Activity.ImageLink != null)
+                {
+                    <img src="@Activity.ImageLink" class="img-thumbnail" style="max-width: 400px; height: auto;" />
+                    <br />
+                }
+                <br />
+                <InputFile OnChange="@OnInputFileChanged"></InputFile>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    <label for="title" class="form-label">Title:</label>
+                    <input type="text" class="form-control" id="title" @bind="@Activity.Title" />
+                    <ValidationMessage For="@(() => Activity.Title)" />
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="difficulty" class="form-label">Difficulty:</label>
+                    <select class="form-control" id="difficulty" @bind="@Activity.Difficulty">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    </select>
+                    <ValidationMessage For="@(() => Activity.Difficulty)" />
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="elevation" class="form-label">Elevation:</label>
+                    <input type="number" class="form-control" id="elevation" @bind="@Activity.Elevation" />
+                    <ValidationMessage For="@(() => Activity.Elevation)" />
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="distance" class="form-label">Distance:</label>
+                    <input type="number" class="form-control" id="distance" @bind="@Activity.Distance" />
+                    <ValidationMessage For="@(() => Activity.Distance)" />
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="datepicker" class="form-label">Date:</label>
+                    <input type="text" class="form-control" id="datepicker" @bind="@Activity.Date" />
+                    <ValidationMessage For="@(() => Activity.Date)" />
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="place" class="form-label">Place:</label>
+                    <input type="text" class="form-control" id="place" @bind="@Activity.Place" />
+                    <ValidationMessage For="@(() => Activity.Place)" />
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="startPoint" class="form-label">Start Point:</label>
+                    <input type="text" class="form-control" id="startPoint" @bind="@Activity.StartPoint" />
+                    <ValidationMessage For="@(() => Activity.StartPoint)" />
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="endPoint" class="form-label">End Point:</label>
+                    <input type="text" class="form-control" id="endPoint" @bind="@Activity.EndPoint" />
+                    <ValidationMessage For="@(() => Activity.EndPoint)" />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    <label for="description" class="form-label">Description:</label>
+                    <textarea class="form-control" id="description" rows="11" @bind="@Activity.Description"></textarea>
+                    <ValidationMessage For="@(() => Activity.Description)" />
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="conditions" class="form-label">Conditions:</label>
+                    <textarea class="form-control" id="conditions" rows="11" @bind="@Activity.Conditions"></textarea>
+                    <ValidationMessage For="@(() => Activity.Conditions)" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group text-center mt-4">
+            <button type="submit" class="btn btn-primary" @onclick="HandleValidSubmit">Update Activity</button>
+        </div>
+    </EditForm>
+</div>
+

@@ -1,0 +1,21 @@
+﻿@page "/Contacts"
+@inherits ContactsBase
+
+<h3>Chat</h3>
+<SearchBox Items="Users" OnSearch="UpdateFilteredUsers"> </SearchBox>
+<div class="container">
+    <div class="row">
+        @foreach (var user in FilteredUsers)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                         <h5 class="card-title">
+                            <a href="@($"chat/{user.Id}")">@user.FName @user.LName</a>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

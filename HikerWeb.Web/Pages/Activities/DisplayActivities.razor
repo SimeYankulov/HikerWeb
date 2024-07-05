@@ -1,0 +1,46 @@
+﻿@inherits DisplayActivityBase
+
+@foreach (var item in Activities)
+{
+    <div class="col-md-3 mb-2">
+
+        <a href="/Activity/@item.Id">
+            <div class="card">
+                <img class="img-thumbnail" src="@item.ImageLink">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">
+                        @item.Title
+                    </h5>
+                    <p class="card-text">@item.Club.Name</p>
+                    <p class="card-text">@item.Date</p>
+                </div>
+            </div>
+        </a>
+    </div>
+}
+<style>
+
+    a {
+        text-decoration: none;
+    }
+
+        a:hover .card {
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+    .card {
+        transition: box-shadow 0.3s ease-in-out;
+        overflow: hidden;
+    }
+
+    a:hover img {
+        transform: scale(1.07);
+        transition: 0.5s ease-in-out;
+    }
+
+    img {
+        transition: 0.5s ease-in-out;
+    } 
+
+</style>

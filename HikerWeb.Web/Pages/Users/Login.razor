@@ -1,0 +1,86 @@
+﻿@layout LoginLayout;
+@inject NavigationManager navigationManager;
+@inherits LoginBase;
+@inject AuthenticationStateProvider authenticationStateProvider;
+@inject NavigationManager navigationManager;
+
+@page "/"
+
+<center>
+    <div class="col-12 card">
+        <div class="col-12 row">
+            <p>&nbsp;</p>
+        </div>
+        <div class="col-12 row">
+            <div class="col-6" style="border-right:groove">
+                <img src="/Images/logo.jpg"/>
+            </div>
+            <div class="col-6" style="border-left:groove">
+                <EditForm Model="@userCredentials" OnValidSubmit="@HandleLogin">
+                    <DataAnnotationsValidator />
+                    <div>
+                        <br/>
+                    </div>
+                    <div>
+                        <h3 style="font-weight:bold; color:forestgreen"><b>Login</b></h3>
+                    </div>
+                    <div>
+                        <br />
+                    </div>
+                    <div class="col-6 row">
+                        <input type="text" class="form-control" placeholder="email address" @bind="userCredentials.Email" />
+                        <ValidationMessage For="@(() => userCredentials.Email)" />
+                    </div>
+                    <br/>
+                    <div class="col-6 row">
+                        <input type="password" class="form-control" placeholder="password" @bind="userCredentials.Password" />
+                        <ValidationMessage For="@(() => userCredentials.Password)" />
+                    </div>
+                    <br/>
+                    <div class="col-6 row">
+                        <button type="submit" class="form-control btn btn-primary" @onclick="HandleLogin">
+                            Login
+                        </button>
+                    </div>
+                    <br />
+                    <div class="col-6 row">
+                            <button class="btn btn-primary" 
+                            @onclick= "NavigateToCreateUser"
+                            >Register user</button>
+                    </div>
+                    <br/>
+                    <div class="col-6 row">
+                        <button  class="btn btn-primary"
+                                @onclick="NavigateToCreateClub">
+                            Register club
+                        </button>
+                    </div>
+    
+                </EditForm>
+            </div>
+        </div>
+        <div class="col-12 row">
+            <p>&nbsp;</p>
+        </div>
+    </div>
+</center>
+       
+@code{
+    private async Task HandleLogin()
+    {
+        var result = await base.LoginUser();
+        if (result != null)
+        {
+            navigationManager.NavigateTo($"/User/{result.Id}", true);
+        }
+    }
+
+    private async Task NavigateToCreateUser()
+    {
+       navigationManager.NavigateTo("/User/Create", true);
+    }
+    private async Task NavigateToCreateClub()
+    {
+        navigationManager.NavigateTo("/Club/Create", true);
+    }
+}

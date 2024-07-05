@@ -1,0 +1,135 @@
+﻿@page "/Activity/Create"
+@inherits CreateActivityBase;
+@using Microsoft.AspNetCore.Components.Forms
+@using System.ComponentModel.DataAnnotations
+
+
+<h1>Create New Activity</h1>
+
+<div class="container">
+    <EditForm Model="Activity" OnValidSubmit="HandleValidSubmit">
+    <div class="row">
+        <div class="col-md-6">
+           
+                <DataAnnotationsValidator />
+
+                <div class="form-group text-center">
+                    @if (Activity.ImageLink != null)
+                    {
+                        <img src="@Activity.ImageLink" style="max-width: 400px; max-height: 400px;" />
+                        <br />
+                    }
+                    <br />
+                    <InputFile OnChange="@OnInputFileChanged"></InputFile>
+                </div>
+
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" class="form-control" id="title" @bind="Activity.Title" />
+                    <ValidationMessage For="@(() => Activity.Title)" />
+                </div>
+                <div class="form-group">
+                    <label for="difficulty">Difficulty:</label>
+                    <select class="form-control" id="difficulty" @bind="Activity.Difficulty">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    </select>
+                    <ValidationMessage For="@(() => Activity.Difficulty)" />
+                </div>
+                <div class="form-group">
+                    <label for="elevation">Elevation:</label>
+                    <input type="number" class="form-control" id="elevation" @bind="Activity.Elevation" />
+                    <ValidationMessage For="@(() => Activity.Elevation)" />
+                </div>
+                <div class="form-group">
+                    <label for="distance">Distance:</label>
+                    <input type="number" class="form-control" id="distance" @bind="Activity.Distance" />
+                    <ValidationMessage For="@(() => Activity.Distance)" />
+                </div>
+                <div class="form-group">
+                    <label>Date:</label>
+                    <input type="text" class="form-control" @bind="Activity.Date" />
+                    <ValidationMessage For="@(() => Activity.Date)" />
+                </div>
+                <div class="form-group">
+                    <label for="place">Place:</label>
+                    <input type="text" class="form-control" id="place" @bind="Activity.Place" />
+                </div>
+                <div class="form-group">
+                    <label for="startPoint">Start Point:</label>
+                    <input type="text" class="form-control" id="startPoint" @bind="Activity.StartPoint" />
+                    <ValidationMessage For="@(() => Activity.StartPoint)" />
+                </div>
+                <div class="form-group">
+                    <label for="endPoint">End Point:</label>
+                    <input type="text" class="form-control" id="endPoint" @bind="Activity.EndPoint" />
+                    <ValidationMessage For="@(() => Activity.EndPoint)" />
+                </div>
+                <div class="form-group">
+                    <label for="activityType">Activity Type:</label>
+                    <select class="form-control" id="activityType" @bind="Activity.ActivityTypeId">
+                        @foreach (var type in Types)
+                        {
+                            <option value="@type.Id">@type.Type</option>
+                        }
+                    </select>
+                </div>
+            
+        </div>
+
+        <div class="col-md-6">
+            <div style="width:100%;" class="container">
+                <div class="row">
+                    <div class="col-sm-12 btn-group" style="padding-top:10px; text-align:left;">
+                        <input type="text" id="pac-input" class="searchBox" placeholder="Search..">
+                    </div>
+                </div>
+            </div>
+            <div id="map" style="height:70vh; width:100%;"></div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea class="form-control" id="description" rows="4" @bind="Activity.Description"></textarea>
+                    <ValidationMessage For="@(() => Activity.Description)" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="conditions">Conditions:</label>
+                    <textarea class="form-control" id="conditions" rows="4" @bind="Activity.Conditions"></textarea>
+                    <ValidationMessage For="@(() => Activity.Conditions)" />
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+                <div class="form-group text-center mt-4">
+                    <button type="submit" class="btn btn-primary">Create Activity</button>
+                </div>
+                <br />
+        </div>
+    </div>
+
+    </EditForm>
+</div>
+
+
+<style>
+    .searchBox{
+        background: #fff;
+        padding : 0 11px 0 13px;
+        width: 100%;
+        height: 35px;
+        font-family: Roboto;
+        font-size:15px;
+        font-weight: 300;
+        text-overflow: ellipsis;
+    }
+</style>
+
+
+

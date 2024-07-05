@@ -1,0 +1,88 @@
+﻿@page "/User/{Id:int}"
+@inherits UserProfileBase
+
+@if (User == null && ErrorMessage == null)
+{
+    <h3>Loading user data...</h3>
+}
+else if (ErrorMessage != null)
+{
+    <DisplayError ErrorMessage="@ErrorMessage"></DisplayError>
+}
+else
+{
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Picture Column -->
+            <div class="col-md-3">
+                <div class="text-center">
+                    <img src="@User.ProfilePicture" alt="Profile Picture" class="img-fluid">
+                </div>
+            </div>
+            <!-- Data Column -->
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- First Name -->
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" class="form-control" id="firstName" value="@User.Fname" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <!-- Last Name -->
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" class="form-control" id="lastName" value="@User.Lname" disabled>
+                        </div>
+                    </div>
+                </div>
+                <!-- Date of Birth -->
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="text" class="form-control" id="dob" value="@User.DOB" disabled>
+                </div>
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" value="@User.Email" disabled>
+                </div>
+                <!-- Phone Number -->
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="text" class="form-control" id="phone" value="@User.PhoneNumber" disabled>
+                </div>
+                <!-- Club Name -->
+                <div class="form-group">
+                    <label for="clubName">Club Name</label>
+                    <input type="text" class="form-control" id="clubName" value="@User.ClubDto.Name" disabled>
+                </div>
+                @if (LoggedIn.UserId == User.Id)
+                {
+                    <br />
+                    <div class="text-center">
+                        <button class="btn btn-primary" onclick="@NavigateToUpdate">Update profile</button>
+                    </div>
+                }
+
+                <!-- Activities Section -->
+                <div class="mt-4">
+                    <h4>Activities Participated</h4>
+                    <div class="list-group">
+                        @foreach (var activity in Activities)
+                        {
+                            <a href="/Activity/@activity.Id" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">@activity.Title</h5>
+                                    <small>@activity.Date</small>
+                                </div>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
